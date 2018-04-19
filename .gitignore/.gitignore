@@ -1,0 +1,300 @@
+title Box Mover
+homepage www.puzzlescript.net
+again_interval 1
+key_repeat_interval .5
+========
+OBJECTS
+========
+
+Background
+lightgreen GREEN
+11111
+01111
+11111
+11101
+11111
+
+pushboxX
+brown red
+00000
+00100
+01110
+00100
+00000
+pushboxL
+brown red
+00000
+00100
+01000
+00100
+00000
+
+pushboxR
+brown red
+00000
+00100
+00010
+00100
+00000
+
+pushboxU
+brown red
+00000
+00100
+01010
+00000
+00000
+
+pushboxD
+brown red
+00000
+00000
+01010
+00100
+00000
+
+pullboxX
+brown blue
+00000
+00100
+01110
+00100
+00000
+pullboxL
+brown blue
+00000
+00100
+01000
+00100
+00000
+
+pullboxR
+brown blue
+00000
+00100
+00010
+00100
+00000
+
+pullboxU
+brown blue
+00000
+00100
+01010
+00000
+00000
+
+pullboxD
+brown blue
+00000
+00000
+01010
+00100
+00000
+
+moveboxX
+brown purple
+00000
+00100
+01110
+00100
+00000
+moveboxL
+brown purple
+00000
+00100
+01000
+00100
+00000
+
+moveboxR
+brown purple
+00000
+00100
+00010
+00100
+00000
+
+moveboxU
+brown purple
+00000
+00100
+01010
+00000
+00000
+
+moveboxD
+brown purple
+00000
+00000
+01010
+00100
+00000
+
+Wall
+BROWN DARKBROWN
+00010
+11111
+01000
+11111
+00010
+
+
+Player1
+Black Orange White Blue
+.000.
+.111.
+23232
+.333.
+.3.3.
+
+
+player2
+black orange white blue
+.000.
+.111.
+32323
+.222.
+.2.2.
+
+pushtarget
+red
+0...0
+.0.0.
+..0..
+.0.0.
+0...0
+
+pulltarget
+blue
+0...0
+.0.0.
+..0..
+.0.0.
+0...0
+
+movetarget
+purple
+0...0
+.0.0.
+..0..
+.0.0.
+0...0
+
+
+
+=======
+LEGEND
+=======
+
+. = Background
+# = Wall
+P = Player1
+x = pushboxX
+y = pullboxX
+z = moveboxX
+a = pushtarget
+b = pulltarget
+c = movetarget
+target = pushtarget or pulltarget or movetarget
+player = player1 or player2
+pushbox = pushboxX or pushboxL or pushboxR or pushboxU or pushboxD
+pullbox = pullboxX or pullboxL or pullboxR or pullboxU or pullboxD
+movebox = moveboxX or moveboxL or moveboxR or moveboxU or moveboxD
+=======
+SOUNDS
+=======
+
+
+================
+COLLISIONLAYERS
+================
+
+Background
+target
+Player, Player2, Wall, pushbox, pullbox, movebox
+
+======
+RULES
+======
+[action player1] -> [player2]
+[action player2] -> [player1]
+
+
+right late [player1 | pushbox] -> [player1 | pushboxR]
+left late [player1 | pushbox] -> [player1 | pushboxL]
+up late [player1 | pushbox] -> [player1 | pushboxU]
+down late [player1 | pushbox] -> [player1 | pushboxD]
+[ | pushbox] -> [ | pushboxX]
+
+right late [player2 | pullbox] -> [player2 | pullboxL]
+left late [player2 | pullbox] -> [player2 | pullboxR]
+up late [player2 | pullbox] -> [player2 | pullboxD]
+down late [player2 | pullbox] -> [player2 | pullboxU]
+[ | pullbox] -> [ | pullboxX]
+
+
+
+right late [player1 | movebox] -> [player1 | moveboxR]
+left late [player1 | movebox] -> [player1 | moveboxL]
+up late [player1 | movebox] -> [player1 | moveboxU]
+down late [player1 | movebox] -> [player1 | moveboxD]
+[ | movebox] -> [ | moveboxX]
+right late [player2 | movebox] -> [player2 | moveboxL]
+left late [player2 | movebox] -> [player2 | moveboxR]
+up late [player2 | movebox] -> [player2 | moveboxD]
+down late [player2 | movebox] -> [player2 | moveboxU]
+[ | movebox] -> [ | moveboxX]
+
+[> player1 | pushboxX] -> [> player1 | > pushboxX]
+[> player1 | movebox] -> [> player1 | > movebox]
+[> player2 | movebox] -> [< player2 | < movebox]
+[> player2 | pullbox] -> [< player2 | < pullbox]
+==============
+WINCONDITIONS
+==============
+all pushbox on pushtarget
+all pullbox on pulltarget
+all movebox on movetarget
+
+
+=======
+LEVELS
+=======
+message Use arrow keys or WASD to move
+message Push the box onto the 'X'
+
+###########
+#........a#
+#..P..x...#
+#.........#
+###########
+
+message Some boxes can only be pulled
+message Press 'X' or Space to change from pushing to pulling
+message Touch the box to move it
+
+###########
+#........y#
+#..P..b...#
+#.........#
+###########
+
+message Some boxes can be pushed and pulled
+message The arrow shows where the box will move when you touch it
+
+###########
+#........c#
+#..P......#
+#z........#
+###########
+
+message Put all boxes on the matching color 'X'
+
+##########
+#.......a#
+#.......y#
+#..P...zb#
+#.......x#
+#.......c#
+##########
